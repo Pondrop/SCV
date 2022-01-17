@@ -65,7 +65,9 @@ namespace SCV
                         TxAudOffer = excelReader.GetDouble(7),
                         ComparableQty = excelReader.GetDouble(8),
                         Soundness = excelReader.GetDouble(9),
-                        AttributeString = excelReader.GetString(10)
+                        AttributeString = excelReader.GetString(10),
+                        ShopperTotalCount = excelReader.GetDouble(11),
+                        CommunityTotalCount = excelReader.GetDouble(12)
 
                     });
                 }              
@@ -120,7 +122,9 @@ namespace SCV
                 selectedPref.Add(new SelectedPreference
                 {
                     Preference = comboBox1.SelectedValue.ToString(),
-                    Weighting = (double)num1.Value
+                    Weighting = (double)num1.Value,
+                    ShopperPurch = (double)shop1.Value,
+                    CommPurch = (double)comm1.Value
                 });
             }
             if (comboBox2.SelectedValue.ToString() != "*****")
@@ -128,7 +132,9 @@ namespace SCV
                 selectedPref.Add(new SelectedPreference
                 {
                     Preference = comboBox2.SelectedValue.ToString(),
-                    Weighting = (double)num2.Value
+                    Weighting = (double)num2.Value,
+                    ShopperPurch = (double)shop2.Value,
+                    CommPurch = (double)comm2.Value
                 });
             }
             if (comboBox3.SelectedValue.ToString() != "*****")
@@ -136,7 +142,9 @@ namespace SCV
                 selectedPref.Add(new SelectedPreference
                 {
                     Preference = comboBox3.SelectedValue.ToString(),
-                    Weighting = (double)num3.Value
+                    Weighting = (double)num3.Value,
+                    ShopperPurch = (double)shop3.Value,
+                    CommPurch = (double)comm3.Value
                 });
             }
 
@@ -192,12 +200,30 @@ namespace SCV
 
                         // if matched calculate and add to total
                         // preference weightings
-                        var selectedShopperPreferenceWeighting = sliderPref * ((x.Weighting / countPrefs) / 100);
-
+                    
                         // shopper and community weightings
+                        int prefPct = 100;
+                        int shopPct = 0;
+                        int commPct = 0;
 
+                        if (checkBox1.Checked)
+                        {
+                            shopPct = (int)numericUpDown1.Value;
+                            prefPct -= shopPct;
+                        }
 
-                        var totalPreferenceWeighting = selectedShopperPreferenceWeighting;
+                        if (checkBox2.Checked)
+                        {
+                            commPct = (int)numericUpDown2.Value;
+                            prefPct -= commPct;
+                        }
+
+                        var selectedShopperPreferenceWeighting = ((x.Weighting / countPrefs) / 100) * (prefPct / 100);
+
+                        var shopPopularity = (x.ShopperPurch / p.ShopperTotalCount) * (shopPct / 100);
+                        var commPopularity = (x.CommPurch / p.CommunityTotalCount) * (commPct / 100); 
+
+                        var totalPreferenceWeighting = selectedShopperPreferenceWeighting + shopPopularity + commPopularity;
 
                         totalProdPrefWeight += totalPreferenceWeighting;
 
@@ -232,12 +258,12 @@ namespace SCV
 
             ProductSCV selectedProd = new ProductSCV();
 
-            if (SCVGrid.SelectedRows.Count != 0)
+            if (label11.Text != "Select")
             {
-                DataGridViewRow row = this.SCVGrid.SelectedRows[0];
-                string product = row.Cells["Product"].Value.ToString();
+                //DataGridViewRow row = this.SCVGrid.SelectedRows[0];
+                //string product = row.Cells["Product"].Value.ToString();
 
-                selectedProd = _products.Where(x => x.Product == product).FirstOrDefault();
+                selectedProd = _products.Where(x => x.Product == label11.Text).FirstOrDefault();
 
                 // Calculate latest SCV
                 _products = CalculateSCV(_products, selectedProd);
@@ -267,6 +293,58 @@ namespace SCV
 
             
 
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            _preferences = new List<string>();
+            _products = GetData();
+            List<string> categories = _products.Select(x => x.Category).Distinct().ToList();
+            _preferences = _preferences.Distinct().ToList();
+            _preferences.Add("*****");
+            _preferences.Sort();
+            _preferences2 = _preferences.ToList();
+            _preferences3 = _preferences.ToList();
+
+            this.comboBox1.DataSource = _preferences;
+            this.comboBox2.DataSource = _preferences2;
+            this.comboBox3.DataSource = _preferences3;
+            this.cmbCat.DataSource = categories;
+            this.SCVGrid.DataSource = _products;
+
+            this.checkBox1.Checked = true;
+            this.checkBox2.Checked = true;
+
+            this.num1.Value = 100;
+            this.num2.Value = 100;
+            this.num3.Value = 100;
+            this.shop1.Value = 1;
+            this.comm1.Value = 1;
+            this.shop2.Value = 1;
+            this.comm2.Value = 1;
+            this.shop3.Value = 1;
+            this.comm3.Value = 1;
+            this.numericUpDown1.Value = 5;
+            this.numericUpDown2.Value = 5;
+
+            this.trackBar1.Value = 3;
+
+            this.label11.Text = "Select";
+
+        }
+
+        private void SCVGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            
+            DataGridViewRow row = this.SCVGrid.CurrentRow;
+            string product = row.Cells["Product"].Value.ToString();
+            label11.Text = product;
+            
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)

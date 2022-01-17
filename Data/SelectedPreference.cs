@@ -10,5 +10,7 @@ namespace SCV.Data
     {
         public string Preference { get; set; }
         public double Weighting { get; set; }
+        public double ShopperPurch { get; set; }
+        public double CommPurch { get; set; }
     }
 }

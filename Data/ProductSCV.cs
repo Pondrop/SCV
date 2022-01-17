@@ -23,6 +23,8 @@ namespace SCV.Data
         public double Soundness { get; set; }
         public double SCV { get; set; }
         public double NetMatchComparison { get; set; }
+        public double ShopperTotalCount { get; set; }
+        public double CommunityTotalCount { get; set; }
         public string AttributeString { get; set; }
         public string[] Attributes { get; set; }
 

@@ -227,10 +227,10 @@ namespace SCV
                             prefPct -= commPct;
                         }
 
-                        double selectedShopperPreferenceWeighting = ((x.Weighting / ((double)countPrefs) / 100) * ((double)prefPct / 100));
+                        double selectedShopperPreferenceWeighting = ((x.Weighting / 100) * (((double)prefPct / (double)countPrefs) / 100));
 
-                        var shopPopularity = (x.ShopperPurch / totalShopper) * ((double)shopPct / 100);
-                        var commPopularity = (x.CommPurch / totalCommunity) * ((double)commPct / 100); 
+                        var shopPopularity = (x.ShopperPurch / totalShopper) * (((double)shopPct / (double)countPrefs) / 100);
+                        var commPopularity = (x.CommPurch / totalCommunity) * (((double)commPct / (double)countPrefs) / 100); 
 
                         var totalPreferenceWeighting = selectedShopperPreferenceWeighting + shopPopularity + commPopularity;
 

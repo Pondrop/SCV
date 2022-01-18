@@ -89,7 +89,7 @@ namespace SCV
             this.SCVGrid.Name = "SCVGrid";
             this.SCVGrid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.SCVGrid.RowTemplate.Height = 24;
-            this.SCVGrid.Size = new System.Drawing.Size(2100, 700);
+            this.SCVGrid.Size = new System.Drawing.Size(1800, 600);
             this.SCVGrid.TabIndex = 5;
             this.SCVGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SCVGrid_CellContentClick);
             // 
@@ -124,6 +124,7 @@ namespace SCV
             this.cmbCat.Name = "cmbCat";
             this.cmbCat.Size = new System.Drawing.Size(183, 24);
             this.cmbCat.TabIndex = 8;
+            this.cmbCat.SelectedIndexChanged += new System.EventHandler(this.cmbCat_SelectedIndexChanged);
             // 
             // label1
             // 

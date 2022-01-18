@@ -30,6 +30,9 @@ namespace SCV
             _preferences2 = _preferences.ToList();
             _preferences3 = _preferences.ToList();
 
+            categories.Add("*****");
+            categories.Sort();
+
             this.comboBox1.DataSource = _preferences;
             this.comboBox2.DataSource = _preferences2;
             this.comboBox3.DataSource = _preferences3;
@@ -178,6 +181,12 @@ namespace SCV
                     break;
             }
 
+            double totalShopper;
+            double totalCommunity;
+
+            totalShopper = prods.Sum(x => x.ShopperTotalCount);
+            totalCommunity = prods.Sum(x => x.CommunityTotalCount);
+
             foreach (var p in prods)    // .Where(x => x.Product != selectedProd.Product).ToList()
             {
                 double totalProdPrefWeight = 0;
@@ -218,10 +227,10 @@ namespace SCV
                             prefPct -= commPct;
                         }
 
-                        var selectedShopperPreferenceWeighting = ((x.Weighting / countPrefs) / 100) * (prefPct / 100);
+                        double selectedShopperPreferenceWeighting = ((x.Weighting / ((double)countPrefs) / 100) * ((double)prefPct / 100));
 
-                        var shopPopularity = (x.ShopperPurch / p.ShopperTotalCount) * (shopPct / 100);
-                        var commPopularity = (x.CommPurch / p.CommunityTotalCount) * (commPct / 100); 
+                        var shopPopularity = (x.ShopperPurch / totalShopper) * ((double)shopPct / 100);
+                        var commPopularity = (x.CommPurch / totalCommunity) * ((double)commPct / 100); 
 
                         var totalPreferenceWeighting = selectedShopperPreferenceWeighting + shopPopularity + commPopularity;
 
@@ -345,6 +354,38 @@ namespace SCV
             string product = row.Cells["Product"].Value.ToString();
             label11.Text = product;
             
+        }
+
+        private void cmbCat_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _preferences = new List<string>();
+            _products = GetData();
+            _products = _products.Where(x => x.Category == cmbCat.SelectedValue.ToString()).ToList();
+
+            foreach (var p in _products)
+            {
+                if (p.AttributeString != "" && p.AttributeString != null)
+                {
+                    p.Attributes = p.AttributeString.Split(',');
+
+                    foreach (var pr in p.Attributes)
+                    {
+                        _preferences.Add(pr);
+                    }
+                }
+
+            }
+
+            _preferences = _preferences.Distinct().ToList();
+            _preferences.Add("*****");
+            _preferences.Sort();
+            _preferences2 = _preferences.ToList();
+            _preferences3 = _preferences.ToList();
+
+            this.comboBox1.DataSource = _preferences;
+            this.comboBox2.DataSource = _preferences2;
+            this.comboBox3.DataSource = _preferences3;
+            this.SCVGrid.DataSource = _products;
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)

@@ -228,6 +228,8 @@ namespace SCV
                 if (selectedPref.Count != 0 && p.Attributes != null)
                 {
                     int countPrefs = selectedPref.Count();
+                    int index = countPrefs;
+                    bool noMatch = true;
                     // Loop through preferences
                     foreach (var x in selectedPref)
                     {
@@ -236,12 +238,17 @@ namespace SCV
 
                         if (!match)
                         {
-                            p.Filter = true;
+                            if (index == 1 && noMatch)
+                            {
+                                p.Filter = true;
+                            }
+                            index -= 1;
                             continue;  
                         }
 
                         // Flag product to be unfiltered
                         p.Filter = false;
+                        noMatch = false;
 
                         // if matched calculate and add to total
                         // preference weightings
@@ -272,6 +279,7 @@ namespace SCV
 
                         totalProdPrefWeight += totalPreferenceWeighting;
 
+                        index -= 1;
                     }
                 }
                 else if (selectedPref.Count != 0)
@@ -283,10 +291,13 @@ namespace SCV
                     p.Filter = false;
                 }
 
-
                 // Value weighting
                 //totalProdValueWeight = p.SCV - (minSCV / scvDifference);
                 totalProdValueWeight = (p.SCV - minSCV) / scvDifference;
+
+                // Display on grid
+                p.TotalProdPrefWeight = totalProdPrefWeight;
+                p.TotalProdValueWeight = totalProdValueWeight;
 
                 // calculate net
                 p.NetMatchComparison = (sliderPref * totalProdPrefWeight) + (sliderVal * totalProdValueWeight);

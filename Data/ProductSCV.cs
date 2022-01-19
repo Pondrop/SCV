@@ -22,12 +22,14 @@ namespace SCV.Data
         public double NetValueTxAUD { get; set; }
         public double Soundness { get; set; }
         public double SCV { get; set; }
+        public double TotalProdPrefWeight { get; set; }
+        public double TotalProdValueWeight { get; set; }
         public double NetMatchComparison { get; set; }
         public double ShopperTotalCount { get; set; }
         public double CommunityTotalCount { get; set; }
         public string AttributeString { get; set; }
         public string[] Attributes { get; set; }
-        public bool Filter { get; set; } = false;
+        public bool Filter { get; set; } = true;
 
     }
 }

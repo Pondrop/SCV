@@ -46,14 +46,6 @@ namespace SCV
             this.num1 = new System.Windows.Forms.NumericUpDown();
             this.num3 = new System.Windows.Forms.NumericUpDown();
             this.num2 = new System.Windows.Forms.NumericUpDown();
-            this.shop2 = new System.Windows.Forms.NumericUpDown();
-            this.shop3 = new System.Windows.Forms.NumericUpDown();
-            this.shop1 = new System.Windows.Forms.NumericUpDown();
-            this.label8 = new System.Windows.Forms.Label();
-            this.comm2 = new System.Windows.Forms.NumericUpDown();
-            this.comm3 = new System.Windows.Forms.NumericUpDown();
-            this.comm1 = new System.Windows.Forms.NumericUpDown();
-            this.label9 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -61,17 +53,27 @@ namespace SCV
             this.btnReset = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.SCVGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.shop2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.shop3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.shop1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.comm2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.comm3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.comm1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.SuspendLayout();
@@ -96,7 +98,7 @@ namespace SCV
             // button5
             // 
             this.button5.BackColor = System.Drawing.Color.Green;
-            this.button5.Location = new System.Drawing.Point(720, 190);
+            this.button5.Location = new System.Drawing.Point(458, 230);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(141, 40);
             this.button5.TabIndex = 6;
@@ -120,7 +122,7 @@ namespace SCV
             // cmbCat
             // 
             this.cmbCat.FormattingEnabled = true;
-            this.cmbCat.Location = new System.Drawing.Point(446, 280);
+            this.cmbCat.Location = new System.Drawing.Point(440, 181);
             this.cmbCat.Name = "cmbCat";
             this.cmbCat.Size = new System.Drawing.Size(183, 24);
             this.cmbCat.TabIndex = 8;
@@ -129,7 +131,7 @@ namespace SCV
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(443, 250);
+            this.label1.Location = new System.Drawing.Point(437, 151);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 17);
             this.label1.TabIndex = 9;
@@ -250,129 +252,9 @@ namespace SCV
             0,
             0});
             // 
-            // shop2
-            // 
-            this.shop2.Location = new System.Drawing.Point(282, 108);
-            this.shop2.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.shop2.Name = "shop2";
-            this.shop2.Size = new System.Drawing.Size(120, 22);
-            this.shop2.TabIndex = 25;
-            this.shop2.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // shop3
-            // 
-            this.shop3.Location = new System.Drawing.Point(441, 108);
-            this.shop3.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.shop3.Name = "shop3";
-            this.shop3.Size = new System.Drawing.Size(120, 22);
-            this.shop3.TabIndex = 24;
-            this.shop3.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // shop1
-            // 
-            this.shop1.Location = new System.Drawing.Point(127, 108);
-            this.shop1.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.shop1.Name = "shop1";
-            this.shop1.Size = new System.Drawing.Size(120, 22);
-            this.shop1.TabIndex = 23;
-            this.shop1.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(13, 108);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(103, 17);
-            this.label8.TabIndex = 22;
-            this.label8.Text = "Shopper Purch";
-            // 
-            // comm2
-            // 
-            this.comm2.Location = new System.Drawing.Point(282, 147);
-            this.comm2.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.comm2.Name = "comm2";
-            this.comm2.Size = new System.Drawing.Size(120, 22);
-            this.comm2.TabIndex = 29;
-            this.comm2.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // comm3
-            // 
-            this.comm3.Location = new System.Drawing.Point(441, 147);
-            this.comm3.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.comm3.Name = "comm3";
-            this.comm3.Size = new System.Drawing.Size(120, 22);
-            this.comm3.TabIndex = 28;
-            this.comm3.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // comm1
-            // 
-            this.comm1.Location = new System.Drawing.Point(127, 147);
-            this.comm1.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.comm1.Name = "comm1";
-            this.comm1.Size = new System.Drawing.Size(120, 22);
-            this.comm1.TabIndex = 27;
-            this.comm1.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(13, 147);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(88, 17);
-            this.label9.TabIndex = 26;
-            this.label9.Text = "Comm Purch";
-            // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(800, 108);
+            this.numericUpDown1.Location = new System.Drawing.Point(301, 146);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             10,
             0,
@@ -389,7 +271,7 @@ namespace SCV
             // 
             // numericUpDown2
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(800, 147);
+            this.numericUpDown2.Location = new System.Drawing.Point(301, 185);
             this.numericUpDown2.Maximum = new decimal(new int[] {
             10,
             0,
@@ -409,7 +291,7 @@ namespace SCV
             this.checkBox1.AutoSize = true;
             this.checkBox1.Checked = true;
             this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(601, 109);
+            this.checkBox1.Location = new System.Drawing.Point(102, 147);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(180, 21);
             this.checkBox1.TabIndex = 34;
@@ -421,7 +303,7 @@ namespace SCV
             this.checkBox2.AutoSize = true;
             this.checkBox2.Checked = true;
             this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Location = new System.Drawing.Point(601, 147);
+            this.checkBox2.Location = new System.Drawing.Point(102, 185);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(195, 21);
             this.checkBox2.TabIndex = 35;
@@ -431,7 +313,7 @@ namespace SCV
             // btnReset
             // 
             this.btnReset.BackColor = System.Drawing.Color.Red;
-            this.btnReset.Location = new System.Drawing.Point(656, 8);
+            this.btnReset.Location = new System.Drawing.Point(680, 13);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(219, 80);
             this.btnReset.TabIndex = 36;
@@ -443,7 +325,7 @@ namespace SCV
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(725, 253);
+            this.label10.Location = new System.Drawing.Point(463, 293);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(137, 17);
             this.label10.TabIndex = 37;
@@ -452,11 +334,146 @@ namespace SCV
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(869, 253);
+            this.label11.Location = new System.Drawing.Point(600, 293);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(47, 17);
             this.label11.TabIndex = 38;
             this.label11.Text = "Select";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(860, 146);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(0, 17);
+            this.label8.TabIndex = 39;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(993, 146);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(0, 17);
+            this.label9.TabIndex = 40;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(1126, 145);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(0, 17);
+            this.label12.TabIndex = 41;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(742, 146);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(78, 17);
+            this.label13.TabIndex = 42;
+            this.label13.Text = "Preference";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(741, 189);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(62, 17);
+            this.label14.TabIndex = 43;
+            this.label14.Text = "Shopper";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(741, 230);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(77, 17);
+            this.label15.TabIndex = 44;
+            this.label15.Text = "Community";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(861, 189);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(0, 17);
+            this.label16.TabIndex = 45;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(862, 230);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(0, 17);
+            this.label17.TabIndex = 46;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(994, 189);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(0, 17);
+            this.label18.TabIndex = 47;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(994, 230);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(0, 17);
+            this.label19.TabIndex = 48;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(1126, 189);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(0, 17);
+            this.label20.TabIndex = 49;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(1126, 230);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(0, 17);
+            this.label21.TabIndex = 50;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.Location = new System.Drawing.Point(877, 270);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(111, 17);
+            this.label22.TabIndex = 51;
+            this.label22.Text = "Total Shopper";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.Location = new System.Drawing.Point(877, 295);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(128, 17);
+            this.label23.TabIndex = 52;
+            this.label23.Text = "Total Community";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(1009, 270);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(0, 17);
+            this.label24.TabIndex = 53;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(1009, 295);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(0, 17);
+            this.label25.TabIndex = 54;
             // 
             // Form1
             // 
@@ -464,6 +481,22 @@ namespace SCV
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1752, 780);
+            this.Controls.Add(this.label25);
+            this.Controls.Add(this.label24);
+            this.Controls.Add(this.label23);
+            this.Controls.Add(this.label22);
+            this.Controls.Add(this.label21);
+            this.Controls.Add(this.label20);
+            this.Controls.Add(this.label19);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.btnReset);
@@ -471,14 +504,6 @@ namespace SCV
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.numericUpDown2);
             this.Controls.Add(this.numericUpDown1);
-            this.Controls.Add(this.comm2);
-            this.Controls.Add(this.comm3);
-            this.Controls.Add(this.comm1);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.shop2);
-            this.Controls.Add(this.shop3);
-            this.Controls.Add(this.shop1);
-            this.Controls.Add(this.label8);
             this.Controls.Add(this.num2);
             this.Controls.Add(this.num3);
             this.Controls.Add(this.num1);
@@ -505,12 +530,6 @@ namespace SCV
             ((System.ComponentModel.ISupportInitialize)(this.num1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.shop2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.shop3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.shop1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.comm2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.comm3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.comm1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.ResumeLayout(false);
@@ -536,14 +555,6 @@ namespace SCV
         private System.Windows.Forms.NumericUpDown num1;
         private System.Windows.Forms.NumericUpDown num3;
         private System.Windows.Forms.NumericUpDown num2;
-        private System.Windows.Forms.NumericUpDown shop2;
-        private System.Windows.Forms.NumericUpDown shop3;
-        private System.Windows.Forms.NumericUpDown shop1;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.NumericUpDown comm2;
-        private System.Windows.Forms.NumericUpDown comm3;
-        private System.Windows.Forms.NumericUpDown comm1;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
         private System.Windows.Forms.CheckBox checkBox1;
@@ -551,6 +562,22 @@ namespace SCV
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label25;
     }
 }
 

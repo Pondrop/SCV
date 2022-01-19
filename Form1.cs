@@ -126,8 +126,8 @@ namespace SCV
                 {
                     Preference = comboBox1.SelectedValue.ToString(),
                     Weighting = (double)num1.Value,
-                    ShopperPurch = (double)shop1.Value,
-                    CommPurch = (double)comm1.Value
+                    ShopperPurch = prods.Where(x => x.Attributes != null && x.Attributes.Contains(comboBox1.SelectedValue.ToString())).Sum(x => x.ShopperTotalCount),
+                    CommPurch = prods.Where(x => x.Attributes != null && x.Attributes.Contains(comboBox1.SelectedValue.ToString())).Sum(x => x.CommunityTotalCount)
                 });
             }
             if (comboBox2.SelectedValue.ToString() != "*****")
@@ -136,8 +136,8 @@ namespace SCV
                 {
                     Preference = comboBox2.SelectedValue.ToString(),
                     Weighting = (double)num2.Value,
-                    ShopperPurch = (double)shop2.Value,
-                    CommPurch = (double)comm2.Value
+                    ShopperPurch = prods.Where(x => x.Attributes != null && x.Attributes.Contains(comboBox2.SelectedValue.ToString())).Sum(x => x.ShopperTotalCount),
+                    CommPurch = prods.Where(x => x.Attributes != null && x.Attributes.Contains(comboBox2.SelectedValue.ToString())).Sum(x => x.CommunityTotalCount)
                 });
             }
             if (comboBox3.SelectedValue.ToString() != "*****")
@@ -146,8 +146,8 @@ namespace SCV
                 {
                     Preference = comboBox3.SelectedValue.ToString(),
                     Weighting = (double)num3.Value,
-                    ShopperPurch = (double)shop3.Value,
-                    CommPurch = (double)comm3.Value
+                    ShopperPurch = prods.Where(x => x.Attributes != null && x.Attributes.Contains(comboBox3.SelectedValue.ToString())).Sum(x => x.ShopperTotalCount),
+                    CommPurch = prods.Where(x => x.Attributes != null && x.Attributes.Contains(comboBox3.SelectedValue.ToString())).Sum(x => x.CommunityTotalCount)
                 });
             }
 
@@ -186,6 +186,38 @@ namespace SCV
 
             totalShopper = prods.Sum(x => x.ShopperTotalCount);
             totalCommunity = prods.Sum(x => x.CommunityTotalCount);
+
+            // Populate labels
+            label24.Text = totalShopper.ToString();
+            label25.Text = totalCommunity.ToString();
+
+            if (selectedPref.Count > 0)
+            {
+                int index = 1;
+                foreach(var sp in selectedPref)
+                {
+                    if (index == 1)
+                    {
+                        label8.Text = sp.Preference;
+                        label16.Text = sp.ShopperPurch.ToString();
+                        label17.Text = sp.CommPurch.ToString();
+                    }
+                    else if (index == 2)
+                    {
+                        label9.Text = sp.Preference;
+                        label18.Text = sp.ShopperPurch.ToString();
+                        label19.Text = sp.CommPurch.ToString();
+                    }
+                    else
+                    {
+                        label12.Text = sp.Preference;
+                        label20.Text = sp.ShopperPurch.ToString();
+                        label21.Text = sp.CommPurch.ToString();
+                    }
+
+                    index += 1;
+                }
+            }
 
             foreach (var p in prods)    // .Where(x => x.Product != selectedProd.Product).ToList()
             {
@@ -335,6 +367,9 @@ namespace SCV
             _preferences2 = _preferences.ToList();
             _preferences3 = _preferences.ToList();
 
+            categories.Add("*****");
+            categories.Sort();
+
             this.comboBox1.DataSource = _preferences;
             this.comboBox2.DataSource = _preferences2;
             this.comboBox3.DataSource = _preferences3;
@@ -347,18 +382,24 @@ namespace SCV
             this.num1.Value = 100;
             this.num2.Value = 100;
             this.num3.Value = 100;
-            this.shop1.Value = 1;
-            this.comm1.Value = 1;
-            this.shop2.Value = 1;
-            this.comm2.Value = 1;
-            this.shop3.Value = 1;
-            this.comm3.Value = 1;
             this.numericUpDown1.Value = 5;
             this.numericUpDown2.Value = 5;
 
             this.trackBar1.Value = 3;
 
             this.label11.Text = "Select";
+
+            label8.Text = "";
+            label16.Text = "";
+            label17.Text = "";
+            label9.Text = "";
+            label18.Text = "";
+            label19.Text = "";
+            label12.Text = "";
+            label20.Text = "";
+            label21.Text = "";
+            label24.Text = "";
+            label25.Text = "";
 
         }
 
@@ -401,6 +442,46 @@ namespace SCV
             this.comboBox2.DataSource = _preferences2;
             this.comboBox3.DataSource = _preferences3;
             this.SCVGrid.DataSource = _products;
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label12_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label16_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label17_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label15_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label14_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)

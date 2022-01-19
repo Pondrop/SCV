@@ -193,7 +193,7 @@ namespace SCV
                 double totalProdValueWeight = 0;
 
                 
-                if (selectedPref != null && p.Attributes != null)
+                if (selectedPref.Count != 0 && p.Attributes != null)
                 {
                     int countPrefs = selectedPref.Count();
                     // Loop through preferences
@@ -204,8 +204,12 @@ namespace SCV
 
                         if (!match)
                         {
+                            p.Filter = true;
                             continue;  
                         }
+
+                        // Flag product to be unfiltered
+                        p.Filter = false;
 
                         // if matched calculate and add to total
                         // preference weightings
@@ -238,6 +242,14 @@ namespace SCV
 
                     }
                 }
+                else if (selectedPref.Count != 0)
+                {
+                    p.Filter = true;
+                }
+                else
+                {
+                    p.Filter = false;
+                }
 
 
                 // Value weighting
@@ -258,12 +270,15 @@ namespace SCV
                 p.NetMatchComparison -= selNMC;
             }
 
+            prods = prods.Where(x => x.Filter == false).ToList();
+
             return prods;
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
             _products = GetData();
+            _products = _products.Where(x => x.Category == cmbCat.SelectedValue.ToString()).ToList();
 
             ProductSCV selectedProd = new ProductSCV();
 

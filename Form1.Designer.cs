@@ -431,7 +431,7 @@ namespace SCV
             // btnReset
             // 
             this.btnReset.BackColor = System.Drawing.Color.Red;
-            this.btnReset.Location = new System.Drawing.Point(1066, 50);
+            this.btnReset.Location = new System.Drawing.Point(656, 8);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(219, 80);
             this.btnReset.TabIndex = 36;

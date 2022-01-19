@@ -27,6 +27,7 @@ namespace SCV.Data
         public double CommunityTotalCount { get; set; }
         public string AttributeString { get; set; }
         public string[] Attributes { get; set; }
+        public bool Filter { get; set; } = false;
 
     }
 }

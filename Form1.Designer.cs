@@ -91,7 +91,7 @@ namespace SCV
             this.SCVGrid.Name = "SCVGrid";
             this.SCVGrid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.SCVGrid.RowTemplate.Height = 24;
-            this.SCVGrid.Size = new System.Drawing.Size(1800, 600);
+            this.SCVGrid.Size = new System.Drawing.Size(2039, 710);
             this.SCVGrid.TabIndex = 5;
             this.SCVGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SCVGrid_CellContentClick);
             // 
@@ -477,9 +477,11 @@ namespace SCV
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.AutoScroll = true;
             this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1752, 780);
             this.Controls.Add(this.label25);
             this.Controls.Add(this.label24);
@@ -522,7 +524,7 @@ namespace SCV
             this.Controls.Add(this.button5);
             this.Controls.Add(this.SCVGrid);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "SCV";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.SCVGrid)).EndInit();

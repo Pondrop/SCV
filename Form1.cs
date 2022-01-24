@@ -79,18 +79,27 @@ namespace SCV
             excelReader.Close();
             excelReader.Dispose();
 
-            foreach(var p in prodList)
+            foreach (var p in prodList)
             {
                 if (p.AttributeString != "" && p.AttributeString != null)
                 {
                     p.Attributes = p.AttributeString.Split(',');
-                    
+
                     foreach (var pr in p.Attributes)
                     {
-                        _preferences.Add(pr);
+                        if (pr != "" && pr != null)
+                        {
+                            char first = pr[0];
+
+                            if (Char.IsLetterOrDigit(first))
+                            {
+                                _preferences.Add(pr);
+                            }
+
+                        }
                     }
                 }
-                
+
             }
 
             return prodList;
@@ -215,6 +224,9 @@ namespace SCV
                         label21.Text = sp.CommPurch.ToString();
                     }
 
+                    // exclude if weighting is zero
+
+
                     index += 1;
                 }
             }
@@ -224,6 +236,7 @@ namespace SCV
                 double totalProdPrefWeight = 0;
                 double totalProdValueWeight = 0;
 
+                // bool next = false;
                 
                 if (selectedPref.Count != 0 && p.Attributes != null)
                 {
@@ -245,6 +258,15 @@ namespace SCV
                             index -= 1;
                             continue;  
                         }
+
+                        //// skip to next product when weighting is zero
+                        //if (x.Weighting == 0)
+                        //{
+                        //    p.Filter = true;
+                        //    next = true;
+                        //    continue;
+                        //}
+
 
                         // Flag product to be unfiltered
                         p.Filter = false;
@@ -291,6 +313,7 @@ namespace SCV
                     p.Filter = false;
                 }
 
+
                 // Value weighting
                 //totalProdValueWeight = p.SCV - (minSCV / scvDifference);
                 totalProdValueWeight = (p.SCV - minSCV) / scvDifference;
@@ -302,11 +325,19 @@ namespace SCV
                 // calculate net
                 p.NetMatchComparison = (sliderPref * totalProdPrefWeight) + (sliderVal * totalProdValueWeight);
 
+                // make sure selected product is always displayed
+                if (p.Product == selectedProd.Product)
+                {
+                    p.Filter = false;
+                }
+
+
             }
 
             // get netSCV for selected prod
             var selNMC = prods.Where(x => x.Product == selectedProd.Product).Select(x => x.NetMatchComparison).FirstOrDefault();
 
+            
             // take away selected prod netSCV from all others
             foreach (var p in prods)
             {
@@ -425,10 +456,10 @@ namespace SCV
 
         private void cmbCat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _preferences = new List<string>();
             _products = GetData();
             _products = _products.Where(x => x.Category == cmbCat.SelectedValue.ToString()).ToList();
 
+            _preferences = new List<string>();
             foreach (var p in _products)
             {
                 if (p.AttributeString != "" && p.AttributeString != null)
@@ -437,7 +468,16 @@ namespace SCV
 
                     foreach (var pr in p.Attributes)
                     {
-                        _preferences.Add(pr);
+                        if (pr != "" && pr != null)
+                        {
+                            char first = pr[0];
+
+                            if (Char.IsLetterOrDigit(first))
+                            {
+                                _preferences.Add(pr);
+                            }
+
+                        }
                     }
                 }
 

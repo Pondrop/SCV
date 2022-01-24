@@ -30,6 +30,7 @@ namespace SCV.Data
         public string AttributeString { get; set; }
         public string[] Attributes { get; set; }
         public bool Filter { get; set; } = true;
+        public bool Excluded { get; set; } = false;
 
     }
 }

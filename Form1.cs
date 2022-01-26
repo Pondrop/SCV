@@ -236,8 +236,15 @@ namespace SCV
                 double totalProdPrefWeight = 0;
                 double totalProdValueWeight = 0;
 
-                // bool next = false;
-                
+                if (selectedPref.Count == 1)
+                {
+                    if (selectedPref.FirstOrDefault().Weighting == 0)
+                    {
+                        p.Filter = false;
+                        continue;
+                    }
+                }
+
                 if (selectedPref.Count != 0 && p.Attributes != null)
                 {
                     int countPrefs = selectedPref.Count();
@@ -259,13 +266,12 @@ namespace SCV
                             continue;  
                         }
 
-                        //// skip to next product when weighting is zero
-                        //if (x.Weighting == 0)
-                        //{
-                        //    p.Filter = true;
-                        //    next = true;
-                        //    continue;
-                        //}
+                        // skip to next product when weighting is zero
+                        if (x.Weighting == 0)
+                        {
+                            p.Filter = false;
+                            continue;
+                        }
 
 
                         // Flag product to be unfiltered
@@ -343,8 +349,37 @@ namespace SCV
             {
                 p.NetMatchComparison -= selNMC;
             }
+           
+
+            // remove any products which have a preference weighting of zero
+            foreach (var pr in prods)
+            {
+                if (selectedPref.Count != 0 && pr.Attributes != null)
+                {
+                    // Loop through preferences
+                    foreach (var x in selectedPref)
+                    {
+                        // Skip if no match
+                        var match = pr.Attributes.Contains(x.Preference);
+
+                        if (!match)
+                        {                          
+                            continue;
+                        }
+
+                        // flag to exclude when weighting is zero or already filtered
+                        if (x.Weighting == 0 || pr.Filter)
+                        {
+                            pr.Filter = true;
+                            continue;
+                        }
+                        
+                    }
+                }
+            }
 
             prods = prods.Where(x => x.Filter == false).ToList();
+
 
             return prods;
         }

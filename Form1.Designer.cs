@@ -91,7 +91,7 @@ namespace SCV
             this.SCVGrid.Name = "SCVGrid";
             this.SCVGrid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.SCVGrid.RowTemplate.Height = 24;
-            this.SCVGrid.Size = new System.Drawing.Size(2039, 710);
+            this.SCVGrid.Size = new System.Drawing.Size(1800, 600);
             this.SCVGrid.TabIndex = 5;
             this.SCVGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SCVGrid_CellContentClick);
             // 
@@ -256,7 +256,7 @@ namespace SCV
             // 
             this.numericUpDown1.Location = new System.Drawing.Point(301, 146);
             this.numericUpDown1.Maximum = new decimal(new int[] {
-            10,
+            66,
             0,
             0,
             0});
@@ -273,7 +273,7 @@ namespace SCV
             // 
             this.numericUpDown2.Location = new System.Drawing.Point(301, 185);
             this.numericUpDown2.Maximum = new decimal(new int[] {
-            10,
+            33,
             0,
             0,
             0});

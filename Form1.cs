@@ -299,10 +299,19 @@ namespace SCV
                         }
 
                         double selectedShopperPreferenceWeighting = ((x.Weighting / 100) * (((double)prefPct / (double)countPrefs) / 100));
+                        double shopPopularity = 0;
+                        double commPopularity = 0;
 
-                        var shopPopularity = (x.ShopperPurch / totalShopper) * (((double)shopPct / (double)countPrefs) / 100);
-                        var commPopularity = (x.CommPurch / totalCommunity) * (((double)commPct / (double)countPrefs) / 100); 
+                        if (totalShopper > 0 && checkBox1.Checked)
+                        {
+                            shopPopularity = (x.ShopperPurch / totalShopper) * (((double)shopPct / (double)countPrefs) / 100);
+                        }
 
+                        if (totalCommunity > 0 && checkBox2.Checked)
+                        {
+                            commPopularity = (x.CommPurch / totalCommunity) * (((double)commPct / (double)countPrefs) / 100);
+                        }
+                                             
                         var totalPreferenceWeighting = selectedShopperPreferenceWeighting + shopPopularity + commPopularity;
 
                         totalProdPrefWeight += totalPreferenceWeighting;
@@ -321,8 +330,11 @@ namespace SCV
 
 
                 // Value weighting
-                //totalProdValueWeight = p.SCV - (minSCV / scvDifference);
-                totalProdValueWeight = (p.SCV - minSCV) / scvDifference;
+                if (scvDifference > 0)
+                {
+                    totalProdValueWeight = (p.SCV - minSCV) / scvDifference;
+                }
+                
 
                 // Display on grid
                 p.TotalProdPrefWeight = totalProdPrefWeight;
@@ -404,7 +416,24 @@ namespace SCV
                 // Calculate using filters and preferences
                 _products = CalculateFullSCV(_products, selectedProd);
 
-                _products = _products.OrderByDescending(x => x.NetMatchComparison).ToList();
+                if (checkBox1.Checked && checkBox2.Checked)
+                {
+                    _products = _products.OrderByDescending(x => x.NetMatchComparison).ThenByDescending(x => x.ShopperTotalCount).ThenByDescending(x => x.CommunityTotalCount).ToList();
+                }
+                else if (checkBox1.Checked && !checkBox2.Checked) 
+                {
+                    _products = _products.OrderByDescending(x => x.NetMatchComparison).ThenByDescending(x => x.ShopperTotalCount).ToList();
+                }
+                else if (!checkBox1.Checked && checkBox2.Checked)
+                {
+                    _products = _products.OrderByDescending(x => x.NetMatchComparison).ThenByDescending(x => x.CommunityTotalCount).ToList();
+                }
+                else
+                {
+                    _products = _products.OrderByDescending(x => x.NetMatchComparison).ToList();
+                }
+
+
 
                 int rank = 1;
 

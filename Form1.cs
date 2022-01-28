@@ -22,7 +22,11 @@ namespace SCV
         {
             InitializeComponent();
             _preferences = new List<string>();
+
+            // Get data from spreadsheet
             _products = GetData();
+
+            // Categories and preferences for dropdowns
             List<string> categories = _products.Select(x => x.Category).Distinct().ToList();
             _preferences = _preferences.Distinct().ToList();
             _preferences.Add("*****");
@@ -33,6 +37,7 @@ namespace SCV
             categories.Add("*****");
             categories.Sort();
 
+            // bind data to relevant form controls
             this.comboBox1.DataSource = _preferences;
             this.comboBox2.DataSource = _preferences2;
             this.comboBox3.DataSource = _preferences3;
@@ -43,15 +48,17 @@ namespace SCV
 
         private List<ProductSCV> GetData()
         {
+            // Set file path of data file to be the release folder
             var outPutDirectory = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
             var excelPath = Path.Combine(outPutDirectory, "ProductSCV.xlsx");
             string excel_Path = new Uri(excelPath).LocalPath;
-            // string excelPath = @"C:\Users\timki\Documents\Pondrop\Code\Data\ProductSCV.xlsx";
+            // Create empty list of products
             List<ProductSCV> prodList = new List<ProductSCV>();
             FileStream stream = File.Open(excel_Path, FileMode.Open, FileAccess.Read);
             IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
             DataSet result = excelReader.AsDataSet();
 
+            // populate list of products
             while (excelReader.Read())
             {
                 if (excelReader.GetString(0) != "Product")
@@ -79,6 +86,7 @@ namespace SCV
             excelReader.Close();
             excelReader.Dispose();
 
+            // Split comma delimited attributes and add them to a list
             foreach (var p in prodList)
             {
                 if (p.AttributeString != "" && p.AttributeString != null)
@@ -107,12 +115,18 @@ namespace SCV
 
         private List<ProductSCV> CalculateSCV (List<ProductSCV> prods, ProductSCV selectedProd)
         {
+
+            // PROCESS FLOW - Suggested Comparable Value (SCV)
             foreach (var p in prods)
             {
+                // Get the difference in list price
                 p.ListPriceChange = selectedProd.Price - p.Price;
+                // Calculate any extra product value using unit difference and unit price
                 p.ExtraProductValue = (p.Units - selectedProd.Units) * p.UnitPrice;
+                // Tanx offer difference
                 p.NetValueTxAUD = p.TxAudOffer - selectedProd.TxAudOffer;
 
+                // Combine to create product SCV
                 p.SCV = p.ListPriceChange + p.ExtraProductValue + p.NetValueTxAUD;
 
             }
@@ -122,12 +136,15 @@ namespace SCV
 
         private List<ProductSCV> CalculateFullSCV(List<ProductSCV> prods, ProductSCV selectedProd)
         {
+            // PROCESS FLOW - SCV Difference
+            // Get the max and min SCV values from the list of products and calculate the difference
             var maxSCV = prods.Select(x => x.SCV).Max();
             var minSCV = prods.Select(x => x.SCV).Min();
-            // .Where(x => x.Product != selectedProd.Product)
 
             double scvDifference = maxSCV - minSCV;
 
+            // PROCESS FLOW - Selected Shopper Preference Weighting (SSPW)
+            // Populate the list of selected preferences and their related values (Preference name, weighting, Shopper total and community total)
             List<SelectedPreference> selectedPref = new List<SelectedPreference>();
             if (comboBox1.SelectedValue.ToString() != "*****")
             {
@@ -135,6 +152,7 @@ namespace SCV
                 {
                     Preference = comboBox1.SelectedValue.ToString(),
                     Weighting = (double)num1.Value,
+                    // Get total shopper and community purchases for this preference across all products in the category
                     ShopperPurch = prods.Where(x => x.Attributes != null && x.Attributes.Contains(comboBox1.SelectedValue.ToString())).Sum(x => x.ShopperTotalCount),
                     CommPurch = prods.Where(x => x.Attributes != null && x.Attributes.Contains(comboBox1.SelectedValue.ToString())).Sum(x => x.CommunityTotalCount)
                 });
@@ -160,6 +178,8 @@ namespace SCV
                 });
             }
 
+
+            // set the preference and value weightings based on the slider position
             double sliderPref, sliderVal;
 
             switch (this.trackBar1.Value)
@@ -190,18 +210,21 @@ namespace SCV
                     break;
             }
 
+            // Get the total shopper and community purchases across all products in the category
             double totalShopper;
             double totalCommunity;
 
             totalShopper = prods.Sum(x => x.ShopperTotalCount);
             totalCommunity = prods.Sum(x => x.CommunityTotalCount);
 
-            // Populate labels
+            // Populate labels for reference
             label24.Text = totalShopper.ToString();
             label25.Text = totalCommunity.ToString();
 
+            // Check if any preferences are selected, skip if not.
             if (selectedPref.Count > 0)
             {
+                // Populate individual preference values for reference (if selected)
                 int index = 1;
                 foreach(var sp in selectedPref)
                 {
@@ -224,18 +247,18 @@ namespace SCV
                         label21.Text = sp.CommPurch.ToString();
                     }
 
-                    // exclude if weighting is zero
-
-
                     index += 1;
                 }
             }
 
-            foreach (var p in prods)    // .Where(x => x.Product != selectedProd.Product).ToList()
+            // Loop through each product and calculate the NetMatchComparison
+            foreach (var p in prods)    
             {
+                // variables for final product preference and value weightings
                 double totalProdPrefWeight = 0;
                 double totalProdValueWeight = 0;
 
+                // If there is only a single preference selected and it has a weighting of zero (exclude), skip to next product
                 if (selectedPref.Count == 1)
                 {
                     if (selectedPref.FirstOrDefault().Weighting == 0)
@@ -245,10 +268,15 @@ namespace SCV
                     }
                 }
 
+                // PROCESS FLOW - Total Selected Preference Weighting
+                // Check for selected preferences. If yes and the product has attributes then calculate preference weight. If not, skip.
                 if (selectedPref.Count != 0 && p.Attributes != null)
                 {
+                    // Get count of selected preferences for use in calculations
                     int countPrefs = selectedPref.Count();
+                    // Copy the count to a new variable which will be used to filter relevant products
                     int index = countPrefs;
+                    // result from checking if the preference matches a product attribute 
                     bool noMatch = true;
                     // Loop through preferences
                     foreach (var x in selectedPref)
@@ -258,6 +286,7 @@ namespace SCV
 
                         if (!match)
                         {
+                            // Set the product to be filtered if there is no match for any of the preferences
                             if (index == 1 && noMatch)
                             {
                                 p.Filter = true;
@@ -278,14 +307,13 @@ namespace SCV
                         p.Filter = false;
                         noMatch = false;
 
-                        // if matched calculate and add to total
-                        // preference weightings
                     
-                        // shopper and community weightings
+                        // preference, shopper and community weightings
                         int prefPct = 100;
                         int shopPct = 0;
                         int commPct = 0;
 
+                        // If shopper and community boxes are checked, set weighting pct and subrtact from overall preference weighting
                         if (checkBox1.Checked)
                         {
                             shopPct = (int)numericUpDown1.Value;
@@ -298,49 +326,62 @@ namespace SCV
                             prefPct -= commPct;
                         }
 
+                        // PROCESS FLOW - Selected Shopper Preference Weighting
                         double selectedShopperPreferenceWeighting = ((x.Weighting / 100) * (((double)prefPct / (double)countPrefs) / 100));
+
+
+                        // default shopper and community popularity to zero
                         double shopPopularity = 0;
                         double commPopularity = 0;
 
+                        // PROCESS FLOW - Shopper Popularity Weighting
+                        // Only calculate if total > 0 and shopper is selected
                         if (totalShopper > 0 && checkBox1.Checked)
                         {
                             shopPopularity = (x.ShopperPurch / totalShopper) * (((double)shopPct / (double)countPrefs) / 100);
                         }
 
+                        // PROCESS FLOW - Community Popularity Weighting
+                        // Only calculate if total > 0 and community is selected
                         if (totalCommunity > 0 && checkBox2.Checked)
                         {
                             commPopularity = (x.CommPurch / totalCommunity) * (((double)commPct / (double)countPrefs) / 100);
                         }
-                                             
+                        
+                        // PROCESS FLOW - Total Selected Product Preference Weighting
+                        // Add the calculated preference weightings together
                         var totalPreferenceWeighting = selectedShopperPreferenceWeighting + shopPopularity + commPopularity;
 
+                        // Add preference weighting to total product preference weighting
                         totalProdPrefWeight += totalPreferenceWeighting;
 
                         index -= 1;
                     }
                 }
+                // Auto filter products with no attributes if a preference is selected
                 else if (selectedPref.Count != 0)
                 {
                     p.Filter = true;
                 }
                 else
+                // Allow all products
                 {
                     p.Filter = false;
                 }
 
-
-                // Value weighting
+                // PROCESS FLOW - Total Product Value Rating
+                // Value weighting - skip if the scvDifference is zero to avoid divide by zero
                 if (scvDifference > 0)
                 {
                     totalProdValueWeight = (p.SCV - minSCV) / scvDifference;
                 }
                 
-
-                // Display on grid
+                // Update product fields with totals
                 p.TotalProdPrefWeight = totalProdPrefWeight;
                 p.TotalProdValueWeight = totalProdValueWeight;
 
-                // calculate net
+                // PROCESS FLOW - Product Net Match Result Ranking
+                // multiply totals by the relevant slider weightings
                 p.NetMatchComparison = (sliderPref * totalProdPrefWeight) + (sliderVal * totalProdValueWeight);
 
                 // make sure selected product is always displayed
@@ -352,11 +393,11 @@ namespace SCV
 
             }
 
-            // get netSCV for selected prod
+            // get netMatchComparison for selected prod
             var selNMC = prods.Where(x => x.Product == selectedProd.Product).Select(x => x.NetMatchComparison).FirstOrDefault();
 
             
-            // take away selected prod netSCV from all others
+            // take away selected prod netSCV from all others to get the final ratings
             foreach (var p in prods)
             {
                 p.NetMatchComparison -= selNMC;
@@ -390,14 +431,15 @@ namespace SCV
                 }
             }
 
+            // Filter the list if required
             prods = prods.Where(x => x.Filter == false).ToList();
-
 
             return prods;
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
+            // PROCESS FLOW - Calculate
             _products = GetData();
             _products = _products.Where(x => x.Category == cmbCat.SelectedValue.ToString()).ToList();
 
@@ -405,9 +447,6 @@ namespace SCV
 
             if (label11.Text != "Select")
             {
-                //DataGridViewRow row = this.SCVGrid.SelectedRows[0];
-                //string product = row.Cells["Product"].Value.ToString();
-
                 selectedProd = _products.Where(x => x.Product == label11.Text).FirstOrDefault();
 
                 // Calculate latest SCV
@@ -416,6 +455,7 @@ namespace SCV
                 // Calculate using filters and preferences
                 _products = CalculateFullSCV(_products, selectedProd);
 
+                // PROCESS FLOW - Ranking the products by netMatchComparison. Then by product shopper total (if shopper is selected) and then by product community total (if community is selected)
                 if (checkBox1.Checked && checkBox2.Checked)
                 {
                     _products = _products.OrderByDescending(x => x.NetMatchComparison).ThenByDescending(x => x.ShopperTotalCount).ThenByDescending(x => x.CommunityTotalCount).ToList();
@@ -433,8 +473,7 @@ namespace SCV
                     _products = _products.OrderByDescending(x => x.NetMatchComparison).ToList();
                 }
 
-
-
+                // Update Rank column in product list
                 int rank = 1;
 
                 foreach (var r in _products)
@@ -443,8 +482,10 @@ namespace SCV
                     rank += 1;
                 }
 
-                this.SCVGrid.DataSource = _products;               
+                // bind product list to the datagrid
+                this.SCVGrid.DataSource = _products;
 
+                // Redraw grid with new data
                 this.SCVGrid.Refresh();
 
             }
@@ -464,6 +505,7 @@ namespace SCV
 
         private void btnReset_Click(object sender, EventArgs e)
         {
+            // Reset all controls on the form and reload data from the spreadsheet
             _preferences = new List<string>();
             _products = GetData();
             List<string> categories = _products.Select(x => x.Category).Distinct().ToList();
@@ -511,7 +553,7 @@ namespace SCV
 
         private void SCVGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+            // Populate label when a product is selected
             DataGridViewRow row = this.SCVGrid.CurrentRow;
             string product = row.Cells["Product"].Value.ToString();
             label11.Text = product;
@@ -520,6 +562,7 @@ namespace SCV
 
         private void cmbCat_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Retrieve new product list when a new category is selected
             _products = GetData();
             _products = _products.Where(x => x.Category == cmbCat.SelectedValue.ToString()).ToList();
 

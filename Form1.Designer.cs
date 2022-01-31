@@ -117,7 +117,6 @@ namespace SCV
             this.trackBar1.Size = new System.Drawing.Size(318, 56);
             this.trackBar1.TabIndex = 7;
             this.trackBar1.Value = 3;
-            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
             // cmbCat
             // 
@@ -214,7 +213,6 @@ namespace SCV
             this.label7.Size = new System.Drawing.Size(82, 17);
             this.label7.TabIndex = 18;
             this.label7.Text = "Pref Weight";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // num1
             // 
@@ -526,7 +524,6 @@ namespace SCV
             this.Name = "Form1";
             this.Text = "SCV";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.SCVGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num1)).EndInit();

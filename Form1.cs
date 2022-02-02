@@ -251,6 +251,7 @@ namespace SCV
                 }
             }
 
+            // PROCESS FLOW - For Each <Product>
             // Loop through each product and calculate the NetMatchComparison
             foreach (var p in prods)    
             {
@@ -455,22 +456,22 @@ namespace SCV
                 // Calculate using filters and preferences
                 _products = CalculateFullSCV(_products, selectedProd);
 
-                // PROCESS FLOW - Ranking the products by netMatchComparison. Then by product shopper total (if shopper is selected) and then by product community total (if community is selected)
+                // PROCESS FLOW - Ranking the products by netMatchComparison. Then by product shopper total (if shopper [checkBox1] is selected) and then by product community total (if community [checkBox2] is selected)
                 if (checkBox1.Checked && checkBox2.Checked)
                 {
-                    _products = _products.OrderByDescending(x => x.NetMatchComparison).ThenByDescending(x => x.ShopperTotalCount).ThenByDescending(x => x.CommunityTotalCount).ToList();
+                    _products = _products.OrderByDescending(x => x.NetMatchComparison).ThenByDescending(x => x.ShopperTotalCount).ThenByDescending(x => x.CommunityTotalCount).ThenByDescending(x => x.Soundness).ToList();
                 }
                 else if (checkBox1.Checked && !checkBox2.Checked) 
                 {
-                    _products = _products.OrderByDescending(x => x.NetMatchComparison).ThenByDescending(x => x.ShopperTotalCount).ToList();
+                    _products = _products.OrderByDescending(x => x.NetMatchComparison).ThenByDescending(x => x.ShopperTotalCount).ThenByDescending(x => x.Soundness).ToList();
                 }
                 else if (!checkBox1.Checked && checkBox2.Checked)
                 {
-                    _products = _products.OrderByDescending(x => x.NetMatchComparison).ThenByDescending(x => x.CommunityTotalCount).ToList();
+                    _products = _products.OrderByDescending(x => x.NetMatchComparison).ThenByDescending(x => x.CommunityTotalCount).ThenByDescending(x => x.Soundness).ToList();
                 }
                 else
                 {
-                    _products = _products.OrderByDescending(x => x.NetMatchComparison).ToList();
+                    _products = _products.OrderByDescending(x => x.NetMatchComparison).ThenByDescending(x => x.Soundness).ToList();
                 }
 
                 // Update Rank column in product list
